@@ -3,61 +3,45 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Resources\LoginResource;
+use App\Repositories\User\ReadRepo;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function login(LoginRequest $request)
+    {
+        //get user with username
+        $usersReadRepository = new ReadRepo();
+        $data = $request->only(["username", "password"]);
+        $userInstance = $usersReadRepository->getUserByCredentials($data["username"]);
+
+        //check credentials
+        if (!\Hash::check($data["password"], $userInstance->password)) {
+            //if authentication is false
+            return $this->errorResponse("credential_is_wrong", null, 401);
+        }
+
+
+        return $this->successResponse("credential_is_correct", [
+            "token" => \Auth::user()->createToken("member", ["view_post", "visitor"]),
+            "user" => new LoginResource($userInstance->profile)
+        ]);
+    }
+
+    public function logout()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function refresh_token()
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function reset_password()
     {
         //
     }
