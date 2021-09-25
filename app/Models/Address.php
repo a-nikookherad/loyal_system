@@ -9,8 +9,8 @@ class Address extends Model
 {
     use HasFactory;
 
-    public function profile()
+    public function addressable()
     {
-        return $this->belongsTo(Profile::class);
+        return $this->morphTo();
     }
 }

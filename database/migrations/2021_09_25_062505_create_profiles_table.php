@@ -15,6 +15,12 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
+            $table->string('name',50)->nullable();
+            $table->string('family',80)->nullable();
+            $table->string('national_number', 12)->nullable();
+            $table->enum('login_type', ["password", "otp"])->default("password");
+            $table->string('password')->nullable();
+            $table->date('birthdate')->nullable();
             $table->timestamps();
         });
     }

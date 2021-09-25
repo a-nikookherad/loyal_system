@@ -16,7 +16,7 @@ class Profile extends Model
 
     public function addresses()
     {
-        return $this->hasMany(Address::class, "profile_id");
+        return $this->morphMany(Address::class, "addressable");
     }
 
     public function roles()
