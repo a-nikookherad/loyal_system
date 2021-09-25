@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\API\V1\LoginRequest;
 use App\Http\Resources\LoginResource;
 use App\Repositories\User\ReadRepo;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -23,7 +22,7 @@ class AuthController extends Controller
             return $this->errorResponse("credential_is_wrong", null, 401);
         }
 
-
+        //return token
         return $this->successResponse("credential_is_correct", [
             "token" => \Auth::user()->createToken("member", ["view_post", "visitor"]),
             "user" => new LoginResource($userInstance->profile)
