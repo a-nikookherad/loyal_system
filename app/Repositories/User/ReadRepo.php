@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ReadRepo
 {
+    public function get($with=[])
+    {
+        return User::query()
+            ->when(!empty($with), function (Builder $builder) use ($with) {
+                $builder->with($with);
+            })
+            ->get();
+    }
+
     public function getUserByCredentials($username)
     {
         return User::query()

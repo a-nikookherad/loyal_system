@@ -4,11 +4,19 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\LoginRequest;
+use App\Http\Requests\API\V1\RegisterRequest;
 use App\Http\Resources\LoginResource;
+use App\Repositories\User\CreateRepo;
 use App\Repositories\User\ReadRepo;
 
 class AuthController extends Controller
 {
+    public function register(RegisterRequest $request)
+    {
+        $userCreateRepository = new CreateRepo();
+        $userCreateRepository->withProfileAndAccount($request->all());
+    }
+
     public function login(LoginRequest $request)
     {
         //get user with username
