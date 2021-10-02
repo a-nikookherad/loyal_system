@@ -14,6 +14,7 @@ class Role extends Model
         "name",
         "level",
     ];
+    protected $with = ["permissions"];
 
     /*    public function profiles()
         {

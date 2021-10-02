@@ -66,7 +66,7 @@ class User extends Authenticatable
             $userLevel = $this->roles->max("level");
 
             //compare user level and given role level
-            if ($userLevel >= $roleLevel) {
+            if ($userLevel > $roleLevel) {
                 $check = true;
             }
         }

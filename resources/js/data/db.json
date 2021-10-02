@@ -1,0 +1,69 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "tasks": [
+    {
+      "id": 1,
+      "title": "title test 1",
+      "description": "lorem ipsom test description for descriptin 1 and it is just sample text",
+      "avatar": "https://reqres.in/img/faces/7-image.jpg",
+      "done":0,
+      "dead_line":"2021-01-05 11:30:00"
+    },
+    {
+      "id": 2,
+      "title": "title test 1",
+      "description": "lorem ipsom test description for descriptin 1 and it is just sample text",
+      "avatar": "https://reqres.in/img/faces/8-image.jpg",
+      "done":0,
+      "dead_line":"2021-01-05 11:30:00"
+    },
+    {
+      "id": 3,
+      "title": "title test 1",
+      "description": "lorem ipsom test description for descriptin 1 and it is just sample text",
+      "avatar": "https://reqres.in/img/faces/9-image.jpg",
+      "done":0,
+      "dead_line":"2021-01-05 11:30:00"
+    },
+    {
+      "id": 4,
+      "title": "title test 1",
+      "description": "lorem ipsom test description for descriptin 1 and it is just sample text",
+      "avatar": "https://reqres.in/img/faces/10-image.jpg",
+      "done":0,
+      "dead_line":"2021-01-05 11:30:00"
+    },
+    {
+      "id": 5,
+      "title": "title test 1",
+      "description": "lorem ipsom test description for descriptin 1 and it is just sample text",
+      "avatar": "https://reqres.in/img/faces/11-image.jpg",
+      "done":0,
+      "dead_line":"2021-01-05 11:30:00"
+    },
+    {
+      "id": 6,
+      "title": "title test 1",
+      "description": "lorem ipsom test description for descriptin 1 and it is just sample text",
+      "avatar": "https://reqres.in/img/faces/12-image.jpg",
+      "done":0,
+      "dead_line":"2021-01-05 11:30:00"
+    }
+  ]
+}
