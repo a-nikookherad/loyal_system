@@ -15,9 +15,14 @@ class Role extends Model
         "level",
     ];
 
-    public function profiles()
+    /*    public function profiles()
+        {
+            return $this->belongsToMany(Profile::class, "profiles_roles", "role_id", "profile_id");
+        }*/
+
+    public function users()
     {
-        return $this->belongsToMany(Profile::class, "profiles_roles", "role_id", "profile_id");
+        return $this->belongsToMany(User::class, "users_roles", "role_id", "user_id");
     }
 
     public function permissions()
