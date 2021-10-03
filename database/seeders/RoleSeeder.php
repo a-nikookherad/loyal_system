@@ -37,6 +37,11 @@ class RoleSeeder extends Seeder
                 "level" => "1000",
             ],
             [
+                "title" => "مشتری",
+                "name" => "customer",
+                "level" => "1000",
+            ],
+            [
                 "title" => "میهمان",
                 "name" => "guest",
                 "level" => "10000",

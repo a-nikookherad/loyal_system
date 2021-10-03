@@ -18,9 +18,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/*------------------ public routes version 1 ----------------*/
+/*==================== version 1 ========================*/
 Route::group([
-    "prefix" => "v1"
+    "namespace" => "App\Http\Controllers\API\V1",
+    "prefix" => "v1",
 ], function () {
-    Route::post("login", [\App\Http\Controllers\API\V1\AuthController::class, "login"])->name("api.login");
+    /*------------------ public routes ----------------*/
+    Route::post("login", "AuthController@login")->name("login");
+    Route::post("register", "AuthController@register")->name("register");
+
+    /*------------------ private routes ----------------*/
+    Route::group([
+        "middleware" => "auth:api"
+    ], function () {
+        Route::post("dashboard", "dashboard@index")->name("dashboard");
+    });
 });
+

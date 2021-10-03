@@ -13,8 +13,16 @@ class AuthController extends Controller
 {
     public function register(RegisterRequest $request)
     {
-        $userCreateRepository = new CreateRepo();
-        $userCreateRepository->withProfileAndAccount($request->all());
+        try {
+            \DB::beginTransaction();
+            $userCreateRepository = new CreateRepo();
+            $userInstance = $userCreateRepository->withRole($request->all(), $request->account_type ?? "member");
+            \DB::commit();
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            return $this->errorResponse("something_went_wrong", [$exception->getMessage()]);
+        }
+        return $this->successResponse("register_successfully", $userInstance, 201);
     }
 
     public function login(LoginRequest $request)
@@ -32,7 +40,7 @@ class AuthController extends Controller
 
         //return token
         return $this->successResponse("credential_is_correct", [
-            "token" => \Auth::user()->createToken("member", ["view_post", "visitor"]),
+            "token" => \Auth::user()->createToken($request->account_type ?? "member", ["view_post", "visitor"]),
             "user" => new LoginResource($userInstance->profile)
         ]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\V1;
 
+use App\Rules\UsernameRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
@@ -24,8 +25,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-//            "email" => "",
-            "username" => "required",
+            "username" => ["required", new UsernameRule()],
             "password" => "required",
         ];
     }

@@ -125,6 +125,7 @@ return [
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
     'mobile' => 'The :attribute format is wrong.',
+    'username_format_is_not_correct' => 'The :attribute format is wrong.',
 
     /*
     |--------------------------------------------------------------------------
