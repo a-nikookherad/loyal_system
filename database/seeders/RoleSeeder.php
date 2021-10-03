@@ -48,7 +48,9 @@ class RoleSeeder extends Seeder
             ],
         ];
 
+        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
         \DB::table("roles")->truncate();
+        \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
         foreach ($roles as $role) {
             Role::query()
                 ->create($role);

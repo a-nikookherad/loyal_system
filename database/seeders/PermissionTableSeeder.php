@@ -11,13 +11,22 @@ class PermissionTableSeeder extends Seeder
 {
     public function run()
     {
+        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+        \DB::table("permissions")->truncate();
+        \DB::table("roles_permissions")->truncate();
+        \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+
         $permission_ids = []; // an empty array of stored permission IDs
         // iterate though all routes
         foreach (Route::getRoutes()->getRoutes() as $key => $route) {
+            //get route middlewares
+            $middlewares = $route->middleware();
+
             //skip from public routes
-            if (empty($route->middleware("auth:web"))) {
+            if (!(in_array("auth:api", $middlewares) || in_array("auth:web", $middlewares))) {
                 continue;
             }
+
             // get route action
             $action = $route->getActionname();
 

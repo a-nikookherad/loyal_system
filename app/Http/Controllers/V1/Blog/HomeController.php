@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\CMS;
+namespace App\Http\Controllers\V1\Blog;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        //
+        return view("blog.pages.home");
     }
 
     public function create()

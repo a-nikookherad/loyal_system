@@ -13,31 +13,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
 /*--------------------- version 1 --------------------*/
 Route::group([
     "namespace" => "\App\Http\Controllers\V1"
 ], function () {
     /*------------------ public routes for CMS ----------------*/
     Route::group([
-        "namespace" => "CMS",
+        "namespace" => "Blog",
         "prefix" => "blog"
     ], function () {
-        Route::post("/", "HomeController@index")->name("blog");
+        Route::get("/", "HomeController@index")->name("blog.landing");
 
     });
 
     /*------------------ public routes for CMS ----------------*/
     Route::group([
         "namespace" => "Commerce",
-        "prefix" => "productions"
+//        "prefix" => "productions"
     ], function () {
-        Route::post("/", "HomeController@index")->name("commerce");
+        Route::get("/", "HomeController@index")->name("commerce.landing");
 
     });
 });

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ReadRepo
 {
-    public function get($with=[])
+    public function get($with = [])
     {
         return User::query()
             ->when(!empty($with), function (Builder $builder) use ($with) {
@@ -23,7 +23,6 @@ class ReadRepo
                 $builder->where("email", $username)
                     ->orWhere("mobile", $username);
             })
-            ->with(["profile.roles"])
             ->first();
     }
 

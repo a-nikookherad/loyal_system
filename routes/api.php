@@ -31,7 +31,7 @@ Route::group([
     Route::group([
         "middleware" => "auth:api"
     ], function () {
-        Route::post("dashboard", "dashboard@index")->name("dashboard");
+//        Route::post("dashboard", "dashboard@index")->name("dashboard");
     });
 });
 

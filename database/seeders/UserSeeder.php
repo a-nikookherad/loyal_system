@@ -14,35 +14,39 @@ class UserSeeder extends Seeder
         //create super admin user
         $users = [
             [
-                "name" => "admin",
-                "family" => "admin",
-                "national_number" => "1234567890",
-                "birthdate" => "1991-03-10",
-                "email" => "super_admin@admin.com",
-                "password" => bcrypt(123),
-                "roles" => [
-                    "super_admin"
-                ],
-                "profiles" => [
+                "user" => [
                     "name" => "admin",
                     "family" => "admin",
                     "national_number" => "1234567890",
-                    "birthdate" => now(),
-                    "accounts" => [
-
-                    ]
+                    "birthdate" => "1991-03-10",
+                    "mobile" => "09375727006",
+                    "email" => "super_admin@admin.com",
+                    "password" => bcrypt(123),
                 ],
+                "roles" => [
+                    "super_admin"
+                ],
+                /*                "profiles" => [
+                                    "name" => "admin",
+                                    "family" => "admin",
+                                    "national_number" => "1234567890",
+                                    "birthdate" => now(),
+                                    "accounts" => [
+
+                                    ]
+                                ],*/
             ],
         ];
 
-        foreach ($users as $user) {
+        foreach ($users as $item) {
+//            dd($user);
             //create user instance
             $userInstance = User::query()
-                ->create($user);
+                ->create($item["user"]);
 
             //get all roles for assign to user
             $roleCollection = Role::query()
-                ->whereIn("name", $user["roles"])
+                ->whereIn("name", $item["roles"])
                 ->get();
 
             //iterate between roles collection
