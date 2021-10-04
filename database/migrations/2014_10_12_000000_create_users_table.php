@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->enum('login_type', ["password", "otp"])->default("password");
             $table->string('password')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

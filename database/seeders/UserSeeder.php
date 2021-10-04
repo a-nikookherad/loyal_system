@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                     "birthdate" => "1991-03-10",
                     "mobile" => "09375727006",
                     "email" => "super_admin@admin.com",
-                    "password" => bcrypt(123),
+                    "password" => \Hash::make(123),
                 ],
                 "roles" => [
                     "super_admin"

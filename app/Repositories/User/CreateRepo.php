@@ -23,7 +23,7 @@ class CreateRepo
 
         //get role for assign to user instance
         $roleRepo = new ReadRepo();
-        $roleInstance = $roleRepo->detailsWithName($role);
+        $roleInstance = $roleRepo->findWithName($role);
         $userInstance->roles()->attach($roleInstance->id);
 
         return $userInstance;

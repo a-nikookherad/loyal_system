@@ -10,6 +10,7 @@ use App\Http\Resources\LoginResource;
 use App\Models\User;
 use App\Repositories\User\CreateRepo;
 use App\Repositories\User\ReadRepo;
+use function PHPUnit\Framework\throwException;
 
 class AuthController extends Controller
 {
@@ -46,16 +47,17 @@ class AuthController extends Controller
                 throw new LoginException(__("messages.credential_is_wrong"), 401);
             }
 
+            //login user
+            \Auth::login($userInstance, $request->remember ?? false);
+
             //return token
             return $this->successResponse("credential_is_corrected", [
-                "token" => \Auth::user()->createToken($request->account_type ?? "member", ["view_post", "visitor"]),
-                "user" => new LoginResource($userInstance->profile)
+                "token" => \Auth::user()->createToken("customer", ["view_post", "visitor", "view_products"])->toArray(),
+                "user" => new LoginResource($userInstance->profiles())
             ]);
 
         } catch (\Throwable $exception) {
-            if ($exception instanceof LoginException) {
-                return $this->errorResponse("something_went_wrong", [$exception->getMessage()], $exception->getCode());
-            }
+            throw($exception);
         }
     }
 

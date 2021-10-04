@@ -16,20 +16,25 @@ class ReadRepo
             ->get();
     }
 
-    public function getUserByCredentials($username)
-    {
-        return User::query()
-            ->where(function (Builder $builder) use ($username) {
-                $builder->where("email", $username)
-                    ->orWhere("mobile", $username);
-            })
-            ->first();
-    }
-
-    public function getUserById($user_id)
+    public function find($user_id)
     {
         return User::query()
             ->where("id", $user_id)
+            ->first();
+    }
+
+    public function findByMobile($mobile)
+    {
+        return User::query()
+            ->where("mobile", $mobile)
+            ->first();
+    }
+
+    public function getUserByCredentials($username)
+    {
+        return User::query()
+            ->where("email", $username)
+            ->orWhere("mobile", $username)
             ->first();
     }
 }
