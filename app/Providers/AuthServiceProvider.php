@@ -29,12 +29,18 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //passport routes
-        if (! $this->app->routesAreCached()) {
+        if (!$this->app->routesAreCached()) {
             Passport::routes();
         }
 
-        foreach (Role::all() as $role){
-            Gate::define($role->name,function (User $user) use ($role){
+        //passport token expiration time
+        Passport::tokensExpireIn(now()->addDays(15));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+
+
+        foreach (Role::all() as $role) {
+            Gate::define($role->name, function (User $user) use ($role) {
                 return $user->hasRole($role->name);
             });
         }

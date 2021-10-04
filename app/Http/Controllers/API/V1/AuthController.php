@@ -5,12 +5,17 @@ namespace App\Http\Controllers\API\V1;
 use App\Exceptions\API\LoginException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\LoginRequest;
+use App\Http\Requests\API\V1\LogoutRequest;
 use App\Http\Requests\API\V1\RegisterRequest;
 use App\Http\Resources\LoginResource;
 use App\Models\User;
 use App\Repositories\User\CreateRepo;
 use App\Repositories\User\ReadRepo;
-use function PHPUnit\Framework\throwException;
+use Laravel\Passport\Passport;
+use Laravel\Passport\TokenRepository;
+use Laravel\Passport\RefreshTokenRepository;
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Lcobucci\JWT\Token\Parser;
 
 class AuthController extends Controller
 {
@@ -19,13 +24,13 @@ class AuthController extends Controller
         try {
             \DB::beginTransaction();
             $userCreateRepository = new CreateRepo();
-            $userInstance = $userCreateRepository->withRole($request->all(), $request->account_type ?? "member");
+            $userInstance = $userCreateRepository->withRole($request->all(), "customer");
             \DB::commit();
+            return $this->successResponse("user_registered_successfully", $userInstance->toArray(), 201);
         } catch (\Exception $exception) {
             \DB::rollBack();
             return $this->errorResponse("something_went_wrong", [$exception->getMessage()]);
         }
-        return $this->successResponse("register_successfully", $userInstance, 201);
     }
 
     public function login(LoginRequest $request)
@@ -52,8 +57,8 @@ class AuthController extends Controller
 
             //return token
             return $this->successResponse("credential_is_corrected", [
-                "token" => \Auth::user()->createToken("customer", ["view_post", "visitor", "view_products"])->toArray(),
-                "user" => new LoginResource($userInstance->profiles())
+                "accessToken" => \Auth::user()->createToken("customer")->accessToken,
+                "user" => new LoginResource($userInstance)
             ]);
 
         } catch (\Throwable $exception) {
@@ -61,9 +66,20 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(LogoutRequest $request)
     {
-        //
+        $tokenId = getJti();
+
+        $tokenRepository = app(TokenRepository::class);
+//        $refreshTokenRepository = app(RefreshTokenRepository::class);
+
+        // Revoke an access token...
+        $tokenRepository->revokeAccessToken($tokenId);
+
+        // Revoke all of the token's refresh tokens...
+//        $refreshTokenRepository->revokeRefreshTokensByAccessTokenId($request);
+
+        return $this->successResponse("you_are_logged_out_successfully");
     }
 
 

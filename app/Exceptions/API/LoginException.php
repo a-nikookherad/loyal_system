@@ -9,7 +9,8 @@ class LoginException extends Exception
 
     public function report()
     {
-        return false;
+        \Log::info($this->getMessage() . " for username " . request("username"));
+//        return false;
     }
 
     public function render($request)

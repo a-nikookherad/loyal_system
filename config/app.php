@@ -179,7 +179,6 @@ return [
          * custom Service Providers...
          */
         Anetwork\Validation\PersianValidationServiceProvider::class,
-
     ],
 
     /*

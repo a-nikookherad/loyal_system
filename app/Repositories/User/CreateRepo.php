@@ -11,6 +11,7 @@ class CreateRepo
     //create raw user
     public function create($data)
     {
+        $data["password"] = \Hash::make($data["password"]);
         return User::query()
             ->create($data);
     }

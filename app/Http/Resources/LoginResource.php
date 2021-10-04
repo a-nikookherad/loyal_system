@@ -17,10 +17,11 @@ class LoginResource extends JsonResource
         return [
             "name" => $this->name,
             "family" => $this->family,
+            "mobile" => $this->mobile,
+            "email" => $this->email,
             "national_number" => $this->national_number,
             "birthdate" => $this->birthdate,
             "roles" => $this->roles
         ];
-//        return parent::toArray($request);
     }
 }

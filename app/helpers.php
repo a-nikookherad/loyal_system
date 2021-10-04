@@ -1,4 +1,8 @@
 <?php
+
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Lcobucci\JWT\Token\Parser;
+
 if (!function_exists("standardMobile")) {
     function standardMobile($input)
     {
@@ -13,5 +17,13 @@ if (!function_exists("validateMobile")) {
         $searchstrings = ["۱", "۲", "٣", "۴", "۵", "۶", "۷", "۸", "۹", "۰", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩", "٠", "۳"];
         $replacestrings = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "3"];
         return str_replace($searchstrings, $replacestrings, $mobile);
+    }
+}
+
+if (!function_exists("getJti")) {
+    function getJti($accessToken = null)
+    {
+        $bearerToken = $accessToken ?? request()->bearerToken();
+        return (new Parser(new JoseEncoder()))->parse($bearerToken)->claims()->get("jti");
     }
 }
