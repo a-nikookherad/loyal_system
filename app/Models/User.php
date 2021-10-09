@@ -53,7 +53,7 @@ class User extends Authenticatable
         return $this->morphMany(Address::class, "addressable");
     }
 
-    public function hasRole(string $role): bool
+    public function hasRole(string $role,$rolesCollection): bool
     {
         $check = false;
         if ($role) {
@@ -65,7 +65,7 @@ class User extends Authenticatable
 
         if (!$check) {
             //get given role level
-            $roleLevel = Role::query()->where('name', '=', $role)->first()->level;
+            $roleLevel = $rolesCollection->where('name', '=', $role)->first()->level;
 
             //max of user role level
             $userLevel = $this->roles->min("level");
