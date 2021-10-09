@@ -1,0 +1,3 @@
+[submodule "resources/js/react_app"]
+	path = resources/js/react_app
+	url = https://github.com/ali-nikookherad/react_app.git

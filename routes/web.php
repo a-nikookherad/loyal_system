@@ -13,6 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+/*--------------------- version 1 --------------------*/
+Route::group([
+    "namespace" => "\App\Http\Controllers\V1"
+], function () {
+    /*------------------ public routes for CMS ----------------*/
+    Route::group([
+        "namespace" => "Blog",
+        "prefix" => "blog"
+    ], function () {
+        Route::get("/", "HomeController@index")->name("blog.landing");
+
+    });
+
+    /*------------------ public routes for CMS ----------------*/
+    Route::group([
+        "namespace" => "Commerce",
+//        "prefix" => "productions"
+    ], function () {
+        Route::get("/", "HomeController@index")->name("commerce.landing");
+
+    });
 });
+

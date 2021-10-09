@@ -14,6 +14,27 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
+Artisan::command('custom:migrate', function () {
+    \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+    $this->call("migrate");
+    \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+});
+
+Artisan::command('fresh', function () {
+    \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+    $this->call("migrate:fresh");
+    \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+});
+
+Artisan::command('custom:fresh', function () {
+    \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+    $this->call("migrate:reset");
+    \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+    \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+    $this->call("migrate");
+    \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+});
+
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');

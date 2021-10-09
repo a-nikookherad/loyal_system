@@ -1,0 +1,5 @@
+@include("commerce.partials.header")
+@include("commerce.partials.nav")
+@include("commerce.partials.sidebar")
+@yield("content")
+@include("commerce.partials.footer")
