@@ -11,10 +11,12 @@ class PermissionTableSeeder extends Seeder
 {
     public function run()
     {
-        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
-        \DB::table("permissions")->truncate();
-        \DB::table("roles_permissions")->truncate();
-        \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+        if (env("APP_ENV") == "local") {
+            \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+            \DB::table("permissions")->truncate();
+            \DB::table("roles_permissions")->truncate();
+            \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+        }
 
         $permission_ids = []; // an empty array of stored permission IDs
         // iterate though all routes
@@ -39,7 +41,7 @@ class PermissionTableSeeder extends Seeder
             // check if this permission is already exists
             $permissionInstance = Permission::query()
                 ->where(
-                    ["controller" => $controller, "method" => $method]
+                    ["controller" => $controller, "method" => $method, "name" => $route->getName()]
                 )->first();
             if (!$permissionInstance instanceof Permission) {
                 $permission = new Permission;
