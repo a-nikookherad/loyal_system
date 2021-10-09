@@ -17,9 +17,8 @@ class PermissionAuthMiddleware
     public function handle(Request $request, Closure $next)
     {
         //get current user roles
-//        $role = Role::findOrFail(auth()->user()->role_id);
         $roles = \Auth::user()->roles;
-        $role = $roles->max("level")->first();
+        $role = $roles->where("level", $roles->min("level"))->first();
 
         // get user role permissions
         $permissions = $role->permissions;
@@ -31,17 +30,20 @@ class PermissionAuthMiddleware
         foreach ($permissions as $permission) {
             $_namespaces_chunks = explode("\\", $permission->controller);
             $controller = end($_namespaces_chunks);
-            if ($actionName == $controller . "@" . $permission->method) {
+            if (($actionName == $controller . "@" . $permission->method) && ($permission->name == $request->route()->getName())) {
                 // authorized request
                 return $next($request);
             }
         }
 
         // none authorized request
-        return response()
-            ->json([
-                "message" => "Unauthorized Action",
-                "errors" => "Unauthorized Action",
-            ], 403);
+        if ($request->acceptsJson()) {
+            return response()
+                ->json([
+                    "message" => __("messages.access_denied"),
+                    "errors" => __("messages.you_dont_have_permission"),
+                ], 403);
+        }
+        return view("errors.403");
     }
 }

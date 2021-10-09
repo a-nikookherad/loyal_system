@@ -4,12 +4,14 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Exceptions\API\LoginException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\V1\DestroyUserRequest;
 use App\Http\Requests\API\V1\LoginRequest;
 use App\Http\Requests\API\V1\LogoutRequest;
 use App\Http\Requests\API\V1\RegisterRequest;
 use App\Http\Resources\LoginResource;
 use App\Models\User;
 use App\Repositories\User\CreateRepo;
+use App\Repositories\User\DeleteRepo;
 use App\Repositories\User\ReadRepo;
 use Laravel\Passport\Passport;
 use Laravel\Passport\TokenRepository;
@@ -82,6 +84,12 @@ class AuthController extends Controller
         return $this->successResponse("you_are_logged_out_successfully");
     }
 
+    public function destroy(DestroyUserRequest $request)
+    {
+        $userDeleteRepository = new DeleteRepo();
+        $userDeleteRepository->destroyWithoutSuperAdmin($request->id);
+        return $this->successResponse("user_delete_successfully", [], 204);
+    }
 
     public function refresh_token()
     {

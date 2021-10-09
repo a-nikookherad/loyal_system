@@ -58,7 +58,7 @@ class User extends Authenticatable
         $check = false;
         if ($role) {
             //check exist given role in user roles
-            $check = in_array($role, $this->roles->name);
+            $check = in_array($role, $this->roles->pluck("name")->toArray());
 //            $check = collect($this->role->name)->contains($role);
         }
 
@@ -68,10 +68,10 @@ class User extends Authenticatable
             $roleLevel = Role::query()->where('name', '=', $role)->first()->level;
 
             //max of user role level
-            $userLevel = $this->roles->max("level");
+            $userLevel = $this->roles->min("level");
 
             //compare user level and given role level
-            if ($userLevel > $roleLevel) {
+            if ($userLevel < $roleLevel) {
                 $check = true;
             }
         }

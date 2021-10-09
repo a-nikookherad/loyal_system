@@ -19,6 +19,7 @@ class CreateRepo
     public function withRole($data, $role = "guest")
     {
         //create user instance
+        $data["password"] = \Hash::make($data["password"]);
         $userInstance = User::query()
             ->create($data);
 

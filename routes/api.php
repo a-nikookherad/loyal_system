@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
 
 /*==================== version 1 ========================*/
 Route::group([
@@ -32,6 +32,7 @@ Route::group([
         "middleware" => "auth:api"
     ], function () {
         Route::post("logout", "AuthController@logout")->name("logout");
+        Route::delete("user/delete", "AuthController@destroy")->name("user.delete");
 
     });
 });

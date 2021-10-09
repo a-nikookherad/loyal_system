@@ -38,8 +38,10 @@ class AuthServiceProvider extends ServiceProvider
         Passport::refreshTokensExpireIn(now()->addDays(30));
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
 
+        $rolesCollection = Role::query()
+            ->get();
 
-        foreach (Role::all() as $role) {
+        foreach ($rolesCollection as $role) {
             Gate::define($role->name, function (User $user) use ($role) {
                 return $user->hasRole($role->name);
             });

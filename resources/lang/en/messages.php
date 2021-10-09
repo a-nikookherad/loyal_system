@@ -7,4 +7,6 @@ return [
     "user_is_not_exist" => "User is not exist",
     "you_are_logged_out_successfully" => "You are logged out successfully",
     "user_registered_successfully" => "User registered successfully",
+    "access_denied" => "Access denied",
+    "you_dont_have_permission" => "You don't have permission for this action",
 ];

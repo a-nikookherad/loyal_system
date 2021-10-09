@@ -51,7 +51,7 @@ class PermissionTableSeeder extends Seeder
                 $permission->save();
 
                 // add stored permission id in array
-                $permission_ids[] = $permission->id;
+                $permission_ids[$permission->id] = ["created_at" => now(), "updated_at" => now()];
             }
         }
 
