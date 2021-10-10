@@ -4,7 +4,7 @@ namespace App\Http\Requests\API\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddressStoreRequest extends FormRequest
+class AddressUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class AddressStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            "type" => "nullable|in:user,merchant",
-            "model_id" => "required_unless:type,null|numeric",
+            "id" => "required|numeric|exists:addresses,id",
             "country" => "nullable|string",
             "state" => "nullable|string",
             "city" => "nullable|string",

@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\API\V1\AddressException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Throwable;
@@ -15,7 +17,6 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
     ];
 
     /**
@@ -36,8 +37,17 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+
+
+        //render response for clients
         $this->renderable(function (Throwable $exception, \Illuminate\Http\Request $request) {
+            /*
+            |--------------------------------------------------------
+            |+++++++++++++++++++ all api exception ++++++++++++++++++++
+            |--------------------------------------------------------
+            */
             if ($request->acceptsJson()) {
+                /*==================== check exception type ====================*/
                 if ($exception instanceof AccessDeniedHttpException) {
                     return response()->json([
                         "message" => __("messages.access_denied"),
@@ -46,20 +56,36 @@ class Handler extends ExceptionHandler
                         ]
                     ], 403);
                 }
+
+                /*==================== normal exception response ====================*/
                 return response()->json([
-                    "message" => __("messages.{$exception->getMessage()}"),
+                    "message" => $exception->getMessage(),
                     "errors" => [
-                        $exception->getFile(),
-                        $exception->getMessage(),
-                        $exception->getCode(),
+                        "file" => $exception->getFile(),
+                        "line" => $exception->getLine(),
+                        "status_code" => $exception->getcode(),
                     ]
+                ], 500);
+            }
+
+            /*
+            |--------------------------------------------------------
+            |+++++++++++++++++++ all web exception ++++++++++++++++++++
+            |--------------------------------------------------------
+            */
+            return view("errors.500");
+
+        });
+
+        //report in laravel log file
+        $this->reportable(function (Throwable $exception) {
+            if (\request()->acceptsJson()) {
+                Log::alert("Handler exception: " . $exception->getMessage(), [
+                    "file:" => $exception->getFile(),
+                    "line:" => $exception->getLine(),
+                    "status_code:" => $exception->getCode(),
                 ]);
             }
         });
-
-        $this->reportable(function (Throwable $e) {
-            //
-        });
-
     }
 }
