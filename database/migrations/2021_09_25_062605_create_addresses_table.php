@@ -21,6 +21,7 @@ class CreateAddressesTable extends Migration
             $table->string("city")->nullable();
             $table->string("address")->nullable();
             $table->string("postal_code", 12)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

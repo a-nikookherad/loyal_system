@@ -15,11 +15,12 @@ class CreatePostRelatesTable extends Migration
     {
         Schema::create('post_relates', function (Blueprint $table) {
             $table->id();
+            $table->string("title")->nullable();
             $table->unsignedBigInteger("post_id")->index();
             $table->foreign("post_id")->references("id")->on("posts")->onUpdate("cascade");
 
-            $table->unsignedBigInteger("relate_id")->index();
-            $table->foreign("relate_id")->references("id")->on("relates")->onUpdate("cascade");
+            $table->unsignedBigInteger("related_id")->index();
+            $table->foreign("related_id")->references("id")->on("relates")->onUpdate("cascade");
             $table->timestamps();
         });
     }

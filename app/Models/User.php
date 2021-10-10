@@ -53,13 +53,17 @@ class User extends Authenticatable
         return $this->morphMany(Address::class, "addressable");
     }
 
+    public function images()
+    {
+        return $this->morphMany(Attachment::class, "attachable");
+    }
+
     public function hasRole(string $role,$rolesCollection): bool
     {
         $check = false;
         if ($role) {
             //check exist given role in user roles
             $check = in_array($role, $this->roles->pluck("name")->toArray());
-//            $check = collect($this->role->name)->contains($role);
         }
 
 

@@ -21,8 +21,10 @@ class CreatePostsTable extends Migration
             $table->string("subtitle")->nullable();
             $table->text("summery")->nullable();
             $table->text("content")->nullable();
+            $table->unsignedBigInteger("category_id")->index()->nullable();
+            $table->foreign("category_id")->references("id")->on("categories");
             $table->unsignedBigInteger("author_id")->index()->nullable();
-            $table->foreign("author_id")->references("id")->on("posts");
+            $table->foreign("author_id")->references("id")->on("users");
             $table->enum("status", ["draft", "in_review", "ready", "publish"])->default("publish");
             $table->enum("visibility", ["private", "public"])->default("public");
             $table->bigInteger("order")->default(0);
