@@ -4,23 +4,21 @@ namespace App\Http\Controllers\API\V1\Addresses;
 
 use App\Exceptions\API\V1\AddressException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\AddressShowRequest;
-use App\Http\Requests\API\V1\AddressStoreRequest;
-use App\Http\Requests\API\V1\AddressUpdateRequest;
+use App\Http\Requests\API\V1\Address\AddressStoreRequest;
+use App\Http\Requests\API\V1\Address\AddressUpdateRequest;
 use App\Models\Address;
 use App\Models\Merchant;
 use App\Models\User;
+use App\Repositories\Address\ReadRepo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Exception;
 
 class AddressController extends Controller
 {
     public function index()
     {
-        $addressCollection = Address::query()
-            ->paginate(\request("per_page") ?? 10);
+        $addressReadRepository = new ReadRepo();
+        $addressCollection = $addressReadRepository->paginate(request("per_page"));
         return $this->successResponse("all_addresses", [$addressCollection]);
     }
 
@@ -80,9 +78,8 @@ class AddressController extends Controller
     {
         try {
             //find address instance
-            $addressInstance = Address::query()
-                ->where("id", $id)
-                ->first();
+            $addressReadRepo = new ReadRepo();
+            $addressInstance = $addressReadRepo->find($id);
 
             if (!$addressInstance instanceof Address) {
                 throw new AddressException(__("messages.address_not_found"), 404);
@@ -117,12 +114,6 @@ class AddressController extends Controller
 
     public function destroy($id)
     {
-        //validate request input
-        Validator::make(
-            \request("id"),
-            ["id" => "required|exists:addresses,id"]
-        );
-
         //delete address instance
         Address::query()
             ->where("id", $id)
