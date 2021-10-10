@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\users;
+namespace App\Http\Controllers\API\V1\Categories;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\User\ReadRepo;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class CategoryController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $userReadRepository = new ReadRepo();
-        $usersCollection = $userReadRepository->get(["profile"]);
-        return $this->successResponse("user_list", $usersCollection);
+        //
     }
 
     /**

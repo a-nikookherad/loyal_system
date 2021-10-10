@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
@@ -38,13 +40,18 @@ class AuthServiceProvider extends ServiceProvider
         Passport::refreshTokensExpireIn(now()->addDays(30));
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
 
-        $rolesCollection = Role::query()
-            ->get();
-
-        foreach ($rolesCollection as $role) {
-            Gate::define($role->name, function (User $user) use ($role, $rolesCollection) {
-                return $user->hasRole($role->name, $rolesCollection);
+        if (Schema::hasTable("roles")) {
+            $rolesCollection = Cache::remember("rolesCollection", now()->addDay(), function () {
+                return Role::query()
+                    ->get();
             });
+
+            foreach ($rolesCollection as $role) {
+                Gate::define($role->name, function (User $user) use ($role, $rolesCollection) {
+                    return $user->hasRole($role->name, $rolesCollection);
+                });
+            }
         }
+
     }
 }

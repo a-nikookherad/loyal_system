@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\merchants;
+namespace App\Http\Controllers\API\V1\Likes;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RegisterController extends Controller
+class LikeController extends Controller
 {
     /**
      * Display a listing of the resource.

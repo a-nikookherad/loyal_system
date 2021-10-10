@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\roles;
+namespace App\Http\Controllers\API\V1\Rates;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class RateController extends Controller
 {
     /**
      * Display a listing of the resource.

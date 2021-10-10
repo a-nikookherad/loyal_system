@@ -4,7 +4,7 @@ namespace App\Repositories\User;
 
 use App\Models\Profile;
 use App\Models\User;
-use App\Repositories\role\ReadRepo;
+use App\Repositories\Role\ReadRepo;
 
 class CreateRepo
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\roles;
+namespace App\Http\Controllers\API\V1\Wallets;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PermissionController extends Controller
+class WalletController extends Controller
 {
     /**
      * Display a listing of the resource.

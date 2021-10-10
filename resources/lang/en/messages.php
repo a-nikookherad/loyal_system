@@ -9,4 +9,5 @@ return [
     "user_registered_successfully" => "User registered successfully",
     "access_denied" => "Access denied",
     "you_dont_have_permission" => "You don't have permission for this action",
+    "model_not_found" => "Model not found!",
 ];

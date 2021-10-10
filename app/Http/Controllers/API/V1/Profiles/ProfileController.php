@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\clubs;
+namespace App\Http\Controllers\API\V1\Profiles;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RegisterController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
