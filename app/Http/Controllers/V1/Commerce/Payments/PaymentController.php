@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\Payments;
+namespace App\Http\Controllers\V1\Commerce\Payments;
 
 use App\Http\Controllers\Controller;
 use App\Logics\SamanPay;
