@@ -12,4 +12,8 @@ return [
     "model_not_found" => "Model not found!",
     "address_added_successfully" => "Address added successfully",
     "address_not_found" => "Address not found",
+    "list_of_roles" => "List of roles",
+    "list_of_permissions" => "List of permissions",
+    "role_not_exist" => "Role not exist!",
+    "permission_successfully_assigned" => "Permissions successfully assigned",
 ];

@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Roles;
+namespace App\Http\Controllers\API\V1\Permissions;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\V1\Role\RoleResource;
-use App\Models\Role;
+use App\Http\Resources\API\V1\Permission\PermissionResource;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class PermissionController extends Controller
 {
 
     public function index()
     {
         //get all roles
-        $roleCollection = Role::query()
+        $permissionCollection = Permission::query()
+            ->where("active", true)
             ->get();
 
-        //decorate each role
-        $roleResource = RoleResource::collection($roleCollection);
+        //decorate each permission
+        $permissionResource = PermissionResource::collection($permissionCollection);
 
-        return $this->successResponse(__("messages.list_of_roles"), [$roleResource]);
+        return $this->successResponse(__("messages.list_of_permissions"), [$permissionResource]);
     }
 
     /**

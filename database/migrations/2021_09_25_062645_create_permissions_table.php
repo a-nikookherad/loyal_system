@@ -20,7 +20,7 @@ class CreatePermissionsTable extends Migration
             $table->string("key")->nullable();
             $table->string("controller")->nullable();
             $table->string("method")->nullable();
-            $table->boolean("active")->nullable();
+            $table->boolean("active")->default(true);
             $table->timestamps();
         });
     }

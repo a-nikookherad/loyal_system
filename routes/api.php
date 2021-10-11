@@ -23,7 +23,7 @@ Route::group([
     "namespace" => "App\Http\Controllers\API\V1",
     "prefix" => "v1",
 ], function () {
-    /*================== public routes ==================*/
+    /*=================================================================== public routes ===================================================================*/
     Route::post("login", "AuthController@login")->name("api.login");
     Route::post("register", "AuthController@register")->name("api.register");
 
@@ -36,7 +36,8 @@ Route::group([
     Route::get("tag", "Attachments\AttachmentController@index")->name("api.tag.get");
     Route::get("tag/{id}", "Attachments\AttachmentController@show")->name("api.tag.show");
 
-    /*================== private routes ==================*/
+
+    /*=================================================================== private routes ===================================================================*/
     Route::group([
         "middleware" => "auth:api"
     ], function () {
@@ -98,6 +99,48 @@ Route::group([
         Route::put("tag/{id}", "Attachments\AttachmentController@update")->name("api.tag.update");
         Route::delete("tag/{id}", "Attachments\AttachmentController@destroy")->name("api.tag.delete");
 
+        /*
+        |---------------------------------------------------
+        |+++++++++++++++++ role route ++++++++++++++++++++
+        |---------------------------------------------------
+        |
+        */
+        Route::get("role", "Roles\RoleController@index")->name("api.role.get");
+        Route::get("role/{id}", "Roles\RoleController@show")->name("api.role.show");
+        Route::post("role", "Roles\RoleController@store")->name("api.role.store");
+        Route::put("role/{id}", "Roles\RoleController@update")->name("api.role.update");
+        Route::delete("role/{id}", "Roles\RoleController@destroy")->name("api.role.delete");
+
+        /*
+        |---------------------------------------------------
+        |+++++++++++++++++ permission route ++++++++++++++++++++
+        |---------------------------------------------------
+        |
+        */
+        Route::get("permission", "Permissions\PermissionController@index")->name("api.permission.get");
+        Route::get("permission/{id}", "Permissions\PermissionController@show")->name("api.permission.show");
+        Route::post("permission", "Permissions\PermissionController@store")->name("api.permission.store");
+        Route::put("permission/{id}", "Permissions\PermissionController@update")->name("api.permission.update");
+        Route::delete("permission/{id}", "Permissions\PermissionController@destroy")->name("api.permission.delete");
+
+        /*
+        |---------------------------------------------------
+        |+++++++++++++++++ Authorization route ++++++++++++++++++++
+        |---------------------------------------------------
+        |
+        */
+        Route::post("role/{role_id}/permissions", "Authorizations\AuthorizationController@assign")->name("api.assign.permission.to.role");
+        Route::post("role/{role_id}/permission/attach", "Authorizations\AuthorizationController@attach")->name("api.attach.permission.to.role");
+        Route::post("role/{role_id}/permission/detach", "Authorizations\AuthorizationController@detach")->name("api.detach.permission.from.role");
+
     });
 });
 
+
+/*==================== version 2 ========================*/
+Route::group([
+    "namespace" => "App\Http\Controllers\API\V1",
+    "prefix" => "v1",
+], function () {
+
+});
