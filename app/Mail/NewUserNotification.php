@@ -23,13 +23,13 @@ class NewUserNotification extends Mailable
 
     /**
      * Build the message.
-     *
      * @return $this
      */
     public function build()
     {
-        return $this->from("newin4mations@gmail.com")
-            ->view("notifications::email");
+        return $this
+//            ->from("info@loyalmarketing.com")
+            ->view("email.test");
 //        return $this->view('view.name');
     }
 }

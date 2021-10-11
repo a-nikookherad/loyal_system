@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 
+Route::get("test", function () {
+    require_once "../app/test.php";
+});
+
 /*==================== version 1 ========================*/
 Route::group([
     "namespace" => "App\Http\Controllers\API\V1",
