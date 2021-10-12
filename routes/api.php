@@ -54,6 +54,17 @@ Route::group([
         Route::post("logout", "AuthController@logout")->name("api.logout");
         Route::delete("user/delete", "AuthController@destroy")->name("api.user.delete");
 
+        /*
+        |---------------------------------------------------
+        |+++++++++++++++++ users route ++++++++++++++++++++
+        |---------------------------------------------------
+        |
+        */
+        Route::get("user", "Users\UserController@index")->name("api.user.get");
+        Route::get("user/{id}", "Users\UserController@show")->name("api.user.show");
+        Route::post("user", "Users\UserController@store")->name("api.user.store");
+        Route::put("user/{id}", "Users\UserController@update")->name("api.user.update");
+        Route::delete("user/{id}", "Users\UserController@destroy")->name("api.user.delete");
 
         /*
         |---------------------------------------------------

@@ -31,6 +31,36 @@ class CreateRepo
         return $userInstance;
     }
 
+    public function withRoles(array $data, array $roles = ["guest"])
+    {
+        //create user instance
+        $data["password"] = \Hash::make($data["password"]);
+        $userInstance = User::query()
+            ->create($data);
+
+        //get role for assign to user instance
+        $roleRepo = new ReadRepo();
+        $roleCollection = $roleRepo->findWithNames($roles);
+        $userInstance->roles()->attach($roleCollection->pluck("id")->toArray());
+
+        return $userInstance;
+    }
+
+    public function withRolesIds(array $data, array $roles_ids = [])
+    {
+        //create user instance
+        $data["password"] = \Hash::make($data["password"]);
+        $userInstance = User::query()
+            ->create($data);
+
+        //get role for assign to user instance
+        $roleRepo = new ReadRepo();
+        $roleCollection = $roleRepo->findWithIds($roles_ids);
+        $userInstance->roles()->attach($roleCollection->pluck("id")->toArray());
+
+        return $userInstance;
+    }
+
     public function withProfile($data)
     {
         //create user instance

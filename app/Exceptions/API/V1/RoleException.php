@@ -6,7 +6,7 @@ use App\Traits\Response;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class AuthorizationException extends Exception
+class RoleException extends Exception
 {
     use Response;
 

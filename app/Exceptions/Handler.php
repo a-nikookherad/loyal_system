@@ -37,8 +37,6 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-
-
         //render response for clients
         $this->renderable(function (Throwable $exception, \Illuminate\Http\Request $request) {
             /*
@@ -58,14 +56,14 @@ class Handler extends ExceptionHandler
                 }
 
                 /*==================== normal exception response ====================*/
-                return response()->json([
-                    "message" => $exception->getMessage(),
-                    "errors" => [
-                        "file" => $exception->getFile(),
-                        "line" => $exception->getLine(),
-                        "status_code" => $exception->getcode(),
-                    ]
-                ], 500);
+                /*                return response()->json([
+                                    "message" => $exception->getMessage(),
+                                    "errors" => [
+                                        "file" => $exception->getFile(),
+                                        "line" => $exception->getLine(),
+                                        "status_code" => $exception->getcode(),
+                                    ]
+                                ], 500);*/
             }
 
             /*
@@ -73,7 +71,7 @@ class Handler extends ExceptionHandler
             |+++++++++++++++++++ all web exception ++++++++++++++++++++
             |--------------------------------------------------------
             */
-            return view("errors.500");
+//            return view("errors.500");
 
         });
 

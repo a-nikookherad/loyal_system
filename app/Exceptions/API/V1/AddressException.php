@@ -21,9 +21,10 @@ class AddressException extends Exception
 
     public function render($request)
     {
-        return $this->errorResponse($this->getMessage(), [
-            $this->getFile(),
-            $this->getLine(),
+        return $this->errorResponse(__("messages.something_went_wrong"), [
+            "message" => $this->getMessage(),
+            "file" => $this->getFile(),
+            "line" => $this->getLine(),
         ], $this->getCode());
     }
 }

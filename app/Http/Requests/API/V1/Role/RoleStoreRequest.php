@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API\V1\Authorization;
+namespace App\Http\Requests\API\V1\Role;
 
-use App\Rules\PermissionExistsRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthorizationAssignRequest extends FormRequest
+class RoleStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +27,9 @@ class AuthorizationAssignRequest extends FormRequest
     public function rules()
     {
         return [
-            "permissions_ids" => ["required", "array", new PermissionExistsRule]
+            "title" => "nullable",
+            "name" => "required|string|unique:roles,name",
+            "level" => "required|numeric",
         ];
     }
 }
