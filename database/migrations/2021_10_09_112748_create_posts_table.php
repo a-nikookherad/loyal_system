@@ -18,8 +18,9 @@ class CreatePostsTable extends Migration
             $table->string("slug");
             $table->string("canonical")->nullable();
             $table->string("title")->nullable();
+            $table->string("description")->nullable();
             $table->string("subtitle")->nullable();
-            $table->text("summery")->nullable();
+            $table->string("summery")->nullable();
             $table->text("content")->nullable();
             $table->unsignedBigInteger("category_id")->index()->nullable();
             $table->foreign("category_id")->references("id")->on("categories");
@@ -31,6 +32,11 @@ class CreatePostsTable extends Migration
             $table->json("extra")->nullable();
             $table->dateTime("published_at")->default(now()->format("Y-m-d H:i:s"));
             $table->dateTime("expired_at")->nullable();
+            $table->unsignedBigInteger("parent_id")->index()->nullable();
+            $table->foreign("parent_id")->references("id")->on("posts")->onUpdate("cascade");
+
+            $table->unsignedBigInteger("update_id")->nullable();
+            $table->foreign("update_id")->references("id")->on("posts")->onUpdate("cascade");
             $table->softDeletes();
             $table->timestamps();
         });

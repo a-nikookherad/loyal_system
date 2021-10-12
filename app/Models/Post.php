@@ -10,6 +10,26 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        "slug",
+        "canonical",
+        "title",
+        "description",
+        "subtitle",
+        "summery",
+        "content",
+        "category_id",
+        "author_id",
+        "status",
+        "visibility",
+        "order",
+        "extra",
+        "published_at",
+        "expired_at",
+        "parent_id",
+        "update_id",
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class, "category_id", "id");
@@ -58,5 +78,15 @@ class Post extends Model
     public function views()
     {
         return $this->morphMany(View::class, "viewable");
+    }
+
+    public function metaTags()
+    {
+        return $this->hasMany(MetaTag::class, "post_id");
+    }
+
+    public function hero()
+    {
+        return $this->hasOne(Hero::class, "post_id");
     }
 }

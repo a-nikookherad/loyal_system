@@ -26,4 +26,8 @@ return [
     "invalid_action" => "Invalid action!",
     "email_is_invalid" => "Email is invalid",
     "user_created_successfully" => "User created successfully",
+    "category_created_successfully" => "Category created successfully",
+    "post_created_successfully" => "Post created successfully",
+    "categories_list" => "Categories list",
+    "posts_list" => "Posts list",
 ];

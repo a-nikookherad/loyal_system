@@ -10,6 +10,14 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        "slug",
+        "title",
+        "subtitle",
+        "description",
+        "parent_id",
+    ];
+
     public function posts()
     {
         return $this->hasMany(Post::class, "category_id");
