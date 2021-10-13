@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\V1\Commerce;
+namespace App\Http\Controllers\V1\Blog;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class LandingController extends Controller
 {
     public function index()
     {
-        return view("commerce.pages.home");
+        return view("blog.pages.landing");
     }
 
     public function create()

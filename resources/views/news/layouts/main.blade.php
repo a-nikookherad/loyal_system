@@ -1,0 +1,5 @@
+@include("news.partials.header")
+@include("news.partials.nav")
+@include("news.partials.sidebar")
+@yield("content")
+@include("news.partials.footer")
