@@ -58,7 +58,12 @@ class User extends Authenticatable
         return $this->morphMany(Attachment::class, "attachable");
     }
 
-    public function hasRole(string $role,$rolesCollection): bool
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, "user_id");
+    }
+
+    public function hasRole(string $role, $rolesCollection): bool
     {
         $check = false;
         if ($role) {

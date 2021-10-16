@@ -17,7 +17,7 @@ class CreateLikesTable extends Migration
             $table->id();
             $table->morphs("likeable");
             $table->enum("name", ["like", "dislike"]);
-            $table->string("identify")->nullable()->comment("ip or something else");
+            $table->string("identify")->nullable()->comment("ip or cookies");
             $table->unsignedBigInteger("user_id")->nullable();
             $table->foreign("user_id")->references("id")->on("users")->onUpdate("cascade");
             $table->softDeletes();

@@ -19,33 +19,38 @@ class RoleSeeder extends Seeder
             [
                 "title" => "مدیر",
                 "name" => "admin",
-                "level" => "9",
+                "level" => "1",
+            ],
+            [
+                "title" => "حسابدار",
+                "name" => "accountant",
+                "level" => "10",
+            ],
+            [
+                "title" => "صندوقدار",
+                "name" => "cashier",
+                "level" => "100",
             ],
             [
                 "title" => "سرپرست",
                 "name" => "supervisor",
-                "level" => "10",
+                "level" => "100",
             ],
             [
                 "title" => "نویسنده",
                 "name" => "author",
-                "level" => "100",
+                "level" => "200",
+            ],
+            [
+                "title" => "مشتری",
+                "name" => "customer",
+                "level" => "300",
             ],
             [
                 "title" => "عضو",
                 "name" => "member",
                 "level" => "1000",
-            ],
-            [
-                "title" => "مشتری",
-                "name" => "customer",
-                "level" => "1000",
-            ],
-            [
-                "title" => "میهمان",
-                "name" => "guest",
-                "level" => "10000",
-            ],
+            ]
         ];
 
         \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();

@@ -40,6 +40,21 @@ Route::group([
     Route::get("tag", "Attachments\AttachmentController@index")->name("api.tag.get");
     Route::get("tag/{id}", "Attachments\AttachmentController@show")->name("api.tag.show");
 
+    /*
+    |---------------------------------------------------
+    |+++++++++++++++++ comments routes ++++++++++++++++++++
+    |---------------------------------------------------
+    |
+    */
+    Route::post("comment", "Comments\CommentController@store")->name("api.comment.store");
+
+    /*
+    |---------------------------------------------------
+    |+++++++++++++++++ comments routes ++++++++++++++++++++
+    |---------------------------------------------------
+    |
+    */
+    Route::post("like", "Likes\LikeController@store")->name("api.like.store");
 
     /*=================================================================== private routes ===================================================================*/
     Route::group([
@@ -110,7 +125,7 @@ Route::group([
         */
         Route::get("comment", "Comments\CommentController@index")->name("api.comment.get");
         Route::get("comment/{id}", "Comments\CommentController@show")->name("api.comment.show");
-        Route::post("comment", "Comments\CommentController@store")->name("api.comment.store");
+//        Route::post("comment", "Comments\CommentController@store")->name("api.comment.store");
         Route::put("comment/{id}", "Comments\CommentController@update")->name("api.comment.update");
         Route::delete("comment/{id}", "Comments\CommentController@destroy")->name("api.comment.delete");
 

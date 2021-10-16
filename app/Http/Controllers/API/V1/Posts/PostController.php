@@ -15,9 +15,11 @@ class PostController extends Controller
     public function index()
     {
         $postsCollection = Post::query()
+            ->with(["category", "costs", "attachments", "tags"])
+            ->withCount("views")
             ->paginate(\request("per_page") ?? 10);
 
-        return $this->successResponse(__("messages.posts_list"), [new PostResourceCollection($postsCollection)],);
+        return $this->successResponse(__("messages.posts_list"), [new PostResourceCollection($postsCollection)]);
     }
 
     public function store(PostStoreRequest $request)
@@ -60,7 +62,13 @@ class PostController extends Controller
 
     public function show($id)
     {
-        //
+        $postsInstance = Post::query()
+            ->where("id", $id)
+            ->with(["comments.likes", "category", "relates", "costs", "attachments", "rates", "tags", "metaTags", "hero"])
+            ->withCount("views")
+            ->first();
+
+        return $this->successResponse(__("messages.posts_information"), [new PostResource($postsInstance)]);
     }
 
     public function update(PostUpdateRequest $request, $id)

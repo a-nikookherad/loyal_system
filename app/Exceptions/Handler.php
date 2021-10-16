@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Exceptions\API\V1\AddressException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -53,6 +54,13 @@ class Handler extends ExceptionHandler
                             __("messages.you_dont_have_permission")
                         ]
                     ], 403);
+                } elseif ($exception instanceof AuthenticationException) {
+                    return response()->json([
+                        "message" => __("messages.unAuthentication"),
+                        "errors" => [
+                            __("messages.you_are_not_logged_in")
+                        ]
+                    ], 401);
                 }
 
                 /*==================== normal exception response ====================*/
@@ -64,6 +72,17 @@ class Handler extends ExceptionHandler
                                         "status_code" => $exception->getcode(),
                                     ]
                                 ], 500);*/
+
+                if (env("APP_DEBUG")) {
+                    dd([
+                        "message" => $exception->getMessage(),
+                        "errors" => [
+                            "file" => $exception->getFile(),
+                            "line" => $exception->getLine(),
+                            "status_code" => $exception->getcode(),
+                        ]
+                    ]);
+                }
             }
 
             /*

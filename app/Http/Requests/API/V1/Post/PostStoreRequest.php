@@ -38,7 +38,7 @@ class PostStoreRequest extends FormRequest
             "author_id" => "nullable|numeric",
             "parent_id" => "nullable|numeric",
             "update_id" => "nullable|numeric",
-            "status" => "nullable|in:draft,in_review,ready,publish",
+            "status" => "nullable|in:draft,in_review,ready,published",
             "visibility" => "nullable|in:private,public",
             "order" => "nullable|numeric",
             "extra" => "nullable",

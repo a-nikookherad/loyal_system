@@ -30,4 +30,8 @@ return [
     "post_created_successfully" => "Post created successfully",
     "categories_list" => "Categories list",
     "posts_list" => "Posts list",
+    "posts_information" => "Post information",
+    "comment_add_successfully" => "Comment add successfully",
+    "unAuthentication" => "User unauthenticated",
+    "you_are_not_logged_in" => "You are not logged in!",
 ];

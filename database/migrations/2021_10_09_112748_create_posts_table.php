@@ -26,7 +26,7 @@ class CreatePostsTable extends Migration
             $table->foreign("category_id")->references("id")->on("categories");
             $table->unsignedBigInteger("author_id")->index()->nullable();
             $table->foreign("author_id")->references("id")->on("users");
-            $table->enum("status", ["draft", "in_review", "ready", "publish"])->default("publish");
+            $table->enum("status", ["draft", "in_review", "ready", "published"])->default("published");
             $table->enum("visibility", ["private", "public"])->default("public");
             $table->bigInteger("order")->default(0);
             $table->json("extra")->nullable();

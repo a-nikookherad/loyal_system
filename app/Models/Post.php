@@ -62,7 +62,7 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, "commentable");
+        return $this->hasMany(Comment::class, "post_id");
     }
 
     public function rates()
@@ -70,7 +70,7 @@ class Post extends Model
         return $this->morphMany(Rate::class, "rateable");
     }
 
-    public function tages()
+    public function tags()
     {
         return $this->morphMany(Tag::class, "taggable");
     }
