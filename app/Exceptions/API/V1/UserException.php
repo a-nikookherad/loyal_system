@@ -21,10 +21,17 @@ class UserException extends Exception
 
     public function render($request)
     {
-        return $this->errorResponse(__("messages.something_went_wrong"), [
-            "message" => $this->getMessage(),
-            "file" => $this->getFile(),
-            "line" => $this->getLine(),
-        ], $this->getCode());
+        if (env("APP_DEBUG")) {
+            $resData = [
+                "message" => $this->getMessage(),
+                "file" => $this->getFile(),
+                "line" => $this->getLine(),
+            ];
+        } else {
+            $resData = [
+                "message" => $this->getMessage(),
+            ];
+        }
+        return $this->errorResponse(__("messages.something_went_wrong"), $resData, $this->getCode());
     }
 }

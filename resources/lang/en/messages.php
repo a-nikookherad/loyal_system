@@ -34,4 +34,6 @@ return [
     "comment_add_successfully" => "Comment add successfully",
     "unAuthentication" => "User unauthenticated",
     "you_are_not_logged_in" => "You are not logged in!",
+    "you_like_this_comment_before" => "You like this comment before",
+    "you_dislike_this_comment_before" => "You dislike this comment before",
 ];

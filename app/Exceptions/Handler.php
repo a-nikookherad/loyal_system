@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Throwable;
 
@@ -73,16 +74,17 @@ class Handler extends ExceptionHandler
                                     ]
                                 ], 500);*/
 
-                if (env("APP_DEBUG")) {
-                    dd([
-                        "message" => $exception->getMessage(),
-                        "errors" => [
-                            "file" => $exception->getFile(),
-                            "line" => $exception->getLine(),
-                            "status_code" => $exception->getcode(),
-                        ]
-                    ]);
-                }
+                //for debugging
+                /*                if (env("APP_DEBUG")) {
+                                    dd([
+                                        "message" => $exception->getMessage(),
+                                        "errors" => [
+                                            "file" => $exception->getFile(),
+                                            "line" => $exception->getLine(),
+                                            "status_code" => $exception->getcode(),
+                                        ]
+                                    ]);
+                                }*/
             }
 
             /*

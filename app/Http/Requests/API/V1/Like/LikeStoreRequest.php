@@ -26,7 +26,7 @@ class LikeStoreRequest extends FormRequest
         return [
             "comment_id" => "required",
             "like" => "nullable|boolean",
-            "dislike" => "required_without:like|boolean",
+            "dislike" => "required_without:like|nullable|boolean|different:like",
         ];
     }
 }

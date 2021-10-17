@@ -3,3 +3,4 @@
 @include("blog.partials.sidebar")
 @yield("content")
 @include("blog.partials.footer")
+@stack("footer.js")

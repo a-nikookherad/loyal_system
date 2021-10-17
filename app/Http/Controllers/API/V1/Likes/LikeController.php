@@ -5,7 +5,9 @@ namespace App\Http\Controllers\API\V1\Likes;
 use App\Exceptions\API\V1\LikeException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Like\LikeStoreRequest;
+use App\Models\Comment;
 use App\Models\Like;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
@@ -24,40 +26,29 @@ class LikeController extends Controller
 
     public function store(LikeStoreRequest $request)
     {
-        dd(435);
         try {
-            $ip = $request->ip();
-            dd($ip);
-            $identifierValue = "identifier_" . $ip;
-
-            if (Cookie::has("__identifier")) {
-                $identifier = Cookie::get("__identifier");
-                $likeInstance = Like::query()
-                    ->where("identify", $identifier)
-                    ->orWhere("identify", $identifierValue)
-                    ->first();
-
-                //check user like before
-                if ($likeInstance instanceof Like) {
-                    $likeInstance->forceDelete();
-                }
-            } else {
-                Cookie::forever("__identifier", $identifierValue);
-            }
+            //get comment id
+            $commentInstance = Comment::query()
+                ->where("id", $request->comment_id)
+                ->first();
 
             //exec likeable
             $likeInstance = new Like();
-            if ($request->like) {
+            if (!empty($request->like)) {
                 $likeInstance->name = "like";
-                $likeInstance->identify = $identifierValue;
+                $newCookie = $this->getNewCookie($likeInstance, $request, "like");
             }
-            if ($request->dislike) {
+
+            if (!empty($request->dislike)) {
                 $likeInstance->name = "dislike";
-                $likeInstance->identify = $identifierValue;
+                $newCookie = $this->getNewCookie($likeInstance, $request, "dislike");
             }
 
-            $likeInstance->save();
+            $commentInstance->likes()->save($likeInstance);
 
+            if (!empty($newCookie)) {
+                return $this->successResponse(__("messages.successfully_operation"))->withCookie($newCookie);
+            }
             return $this->successResponse(__("messages.successfully_operation"));
         } catch (\Throwable $exception) {
             throw($exception);
@@ -96,5 +87,42 @@ class LikeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function getNewCookie(Like $likeInstance, LikeStoreRequest $request, $type)
+    {
+        if (\Auth::guard("api")->check()) {
+            $user_id = \Auth::guard("api")->id();
+            $checkLikeInstance = Like::query()
+                ->where("user_id", $user_id)
+                ->where("name", $type)
+                ->first();
+            //check user like before
+            if ($checkLikeInstance instanceof Like) {
+                throw new LikeException(__("messages.you_{$type}_this_comment_before"), 409);
+            }
+            $likeInstance->user_id = $user_id;
+        } else {
+            $ip = $request->ip();
+            $identifierValue = "identifier_" . $ip;
+            $oldCookie = $request->cookie("__identifier");
+            if (!empty($oldCookie)) {
+                throw new LikeException(__("messages.you_{$type}_this_comment_before"), 409);
+            } else {
+                $checkLikeInstance = Like::query()
+                    ->where("identify", $identifierValue)
+                    ->where("name", $type)
+                    ->first();
+
+                //check user like before
+                if ($checkLikeInstance instanceof Like) {
+                    throw new LikeException(__("messages.you_{$type}_this_comment_before"), 409);
+                }
+                $newCookie = Cookie::make("__identifier", $identifierValue, now()->addMonth()->timestamp);
+            }
+
+            $likeInstance->identify = $identifierValue;
+            return $newCookie;
+        }
     }
 }
