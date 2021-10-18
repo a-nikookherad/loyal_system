@@ -7,22 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Like\LikeStoreRequest;
 use App\Models\Comment;
 use App\Models\Like;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
 class LikeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
-
 
     public function store(LikeStoreRequest $request)
     {
@@ -55,12 +48,6 @@ class LikeController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
@@ -103,8 +90,7 @@ class LikeController extends Controller
             }
             $likeInstance->user_id = $user_id;
         } else {
-            $ip = $request->ip();
-            $identifierValue = "identifier_" . $ip;
+            $identifierValue = getIdentifier();
             $oldCookie = $request->cookie("__identifier");
             if (!empty($oldCookie)) {
                 throw new LikeException(__("messages.you_{$type}_this_comment_before"), 409);

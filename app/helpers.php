@@ -27,3 +27,11 @@ if (!function_exists("getJti")) {
         return (new Parser(new JoseEncoder()))->parse($bearerToken)->claims()->get("jti");
     }
 }
+
+if (!function_exists("getIdentifier")) {
+    function getIdentifier()
+    {
+        return "identifier_" . request()->ip();
+    }
+}
+
