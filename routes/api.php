@@ -27,6 +27,14 @@ Route::group([
     "prefix" => "v1",
 ], function () {
     /*=================================================================== public routes ===================================================================*/
+    Route::get("blog/{category}/{post}", "Routing\RoutingController@blog");
+
+    /*
+    |---------------------------------------------------
+    |+++++++++++++++++ authentication routes ++++++++++++++++++++
+    |---------------------------------------------------
+    |
+    */
     Route::post("login", "AuthController@login")->name("api.login");
     Route::post("register", "AuthController@register")->name("api.register");
 

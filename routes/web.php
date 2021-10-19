@@ -24,8 +24,7 @@ Route::group([
         "namespace" => "Blog",
         "prefix" => "blog"
     ], function () {
-        Route::get("/", "LandingController@index")->name("blog.landing");
-
+        Route::get("{category}/{post?}", "LandingController@index");
     });
 
     /*------------------ commerce routes ----------------*/
