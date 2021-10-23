@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get("test", function () {
+    require_once "../app/test.php";
+});
+
+
 /*--------------------- public routes version 1 --------------------*/
 Route::group([
     "namespace" => "\App\Http\Controllers\V1"
