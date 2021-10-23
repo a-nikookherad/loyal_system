@@ -20,6 +20,8 @@ class CreateAttachmentsTable extends Migration
             $table->string("type", 150)->nullable();
             $table->string("alt", 300)->nullable();
             $table->string("src", 400);
+            $table->string("width", 10);
+            $table->string("height", 10);
             $table->string("description", 500)->nullable();
             $table->softDeletes();
             $table->timestamps();
