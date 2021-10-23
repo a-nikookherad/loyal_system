@@ -1,10 +1,14 @@
 @extends("blog.layouts.main")
+@push("header.styles")
+@endpush
+@push("header.scripts")
+@endpush
 @section("content")
     <h1>this is blog landing</h1>
     <button id="like" name="like" value="1">like</button>
     <button id="dislike" name="dislike" value="1">dislike</button>
 @endsection
-@push("footer.js")
+@push("footer.scripts")
     <script src="{{asset("assets/js/jquery-3.6.0.min.js")}}"></script>
     <script>
         $('#like').click(function () {

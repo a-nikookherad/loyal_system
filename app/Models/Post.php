@@ -30,6 +30,19 @@ class Post extends Model
         "update_id",
     ];
 
+    protected $with = ["children"];
+    protected $withCount = ["views"];
+
+    public function children()
+    {
+        return $this->hasMany(Post::class, "parent_id");
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Post::class, "parent_id");
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, "category_id", "id");

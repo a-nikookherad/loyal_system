@@ -26,7 +26,7 @@ class LandingController extends Controller
             //check post
             $postInstance = Post::query()
                 ->with(["parent", "children", "category"])
-                ->where("slug", $post)
+                ->where("slug", $category)
                 ->first();
             if (!$postInstance instanceof Post) {
                 //check category
