@@ -30,8 +30,8 @@ class Post extends Model
         "update_id",
     ];
 
-    protected $with = ["children"];
-    protected $withCount = ["views"];
+//    protected $with = ["children"];
+//    protected $withCount = ["views"];
 
     public function children()
     {

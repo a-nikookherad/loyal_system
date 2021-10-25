@@ -1,10 +1,13 @@
 @extends("blog.layouts.main")
 @push("header.styles")
+    @dd(env("APP_URL").canonical($postInstance))
+    <meta name="canonical" content="{{env("APP_URL")}}"
 @endpush
 @push("header.scripts")
 @endpush
 @section("content")
     <h1>this is blog landing</h1>
+    <p>{!! $postInstance->content !!}</p>
     <button id="like" name="like" value="1">like</button>
     <button id="dislike" name="dislike" value="1">dislike</button>
 @endsection

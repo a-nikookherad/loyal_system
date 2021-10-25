@@ -3,13 +3,46 @@
 namespace App\Http\Controllers\V1\Commerce;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
 {
-    public function index()
+    public function index($category, $post = null)
     {
-        return view("commerce.pages.landing");
+        if (!empty($category) && !empty($post)) {
+            //category and post
+            $postInstance = Post::query()
+                ->where("slug", $post)
+                ->with(["parent", "children", "category"])
+                ->whereHas("category", function (Builder $builder) use ($category) {
+                    $builder->where("slug", $category);
+                })
+                ->latest("created_at")
+                ->first();
+            return view("commerce.pages.landing", compact("postInstance"));
+        } elseif (!empty($category) && empty($post)) {
+            //check post
+            $postInstance = Post::query()
+                ->with(["parent", "children", "category"])
+                ->where("slug", $category)
+                ->first();
+            if (!$postInstance instanceof Post) {
+                //check category
+                $categoryInstance = Category::query()
+                    ->where("slug", $category)
+                    ->first();
+                if (!$categoryInstance instanceof Category) {
+                    return view("errors.404");
+                }
+                return view("commerce.pages.landing", compact("categoryInstance"));
+            }
+            return view("commerce.pages.landing", compact("postInstance"));
+        }
+
+        return view("errors.404");
     }
 
     public function create()

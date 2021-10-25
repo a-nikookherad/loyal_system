@@ -16,32 +16,42 @@ class LandingController extends Controller
             //category and post
             $postInstance = Post::query()
                 ->where("slug", $post)
-                ->with("category", function (Builder $builder) use ($category) {
+                ->with(["parent", "category"])
+                ->whereHas("category", function (Builder $builder) use ($category) {
+                    $builder->where("slug", $category);
+                })
+                ->orWhereHas("parent", function (Builder $builder) use ($category) {
                     $builder->where("slug", $category);
                 })
                 ->latest("created_at")
                 ->first();
-            return view("blog.pages.landing", compact("postInstance"));
+            if ($postInstance instanceof Post) {
+                return view("blog.pages.landing", compact("postInstance"));
+            }
+            return abort(404);
         } elseif (!empty($category) && empty($post)) {
             //check post
             $postInstance = Post::query()
-                ->with(["parent", "children", "category"])
+                ->with(["parent", "category"])
                 ->where("slug", $category)
                 ->first();
-            if (!$postInstance instanceof Post) {
-                //check category
-                $categoryInstance = Category::query()
-                    ->where("slug", $category)
-                    ->first();
-                if (!$categoryInstance instanceof Category) {
-                    return view("errors.404");
-                }
+            if ($postInstance instanceof Post) {
+                return view("blog.pages.landing", compact("postInstance"));
+            }
+
+            //check category
+            $categoryInstance = Category::query()
+                ->with(["parent"])
+                ->where("slug", $category)
+                ->first();
+            if ($categoryInstance instanceof Category) {
                 return view("blog.pages.landing", compact("categoryInstance"));
             }
-            return view("blog.pages.landing", compact("postInstance"));
+
+            return abort(404);
         }
 
-        return view("errors.404");
+        return abort(404);
     }
 
     public function create()

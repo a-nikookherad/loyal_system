@@ -35,3 +35,53 @@ if (!function_exists("getIdentifier")) {
     }
 }
 
+if (!function_exists("canonical")) {
+    function canonical($postInstance)
+    {
+        $canonical = [];
+        array_push($canonical, $postInstance->slug);
+        if (!empty($postInstance->parent_id)) {
+            array_push($canonical, $postInstance->parent->slug);
+        } elseif (!empty($postInstance->category_id)) {
+            array_push($canonical, $postInstance->category->slug);
+        }
+        $canonical = array_reverse($canonical);
+        $canonical = implode("/", $canonical);
+        return "/" . $canonical;
+    }
+}
+
+if (!function_exists("breadCrumb")) {
+    function breadCrumb(\App\Models\Post $postInstance)
+    {
+        $postsSlugs = [];
+        $breadCrumb = "";
+
+        $slug = "";
+
+        array_push($postsSlugs, ["slug" => $postInstance->slug, "breadCrumb" => $postInstance->title]);
+
+        while (!empty($postInstance->parent_id)) {
+            $postInstance = $postInstance->parent;
+            $canonical .= "/" . $postInstance->slug;
+            array_push($postsSlugs, ["slug" => $postInstance->slug, "breadCrumb" => $postInstance->title]);
+        }
+
+        //get category slug
+        if (!empty($postInstance->category_id) && $postInstance->category->slug !== "unknown") {
+            $categoryInstance = $postInstance->category;
+            array_push($postsSlugs, ["slug" => $categoryInstance->slug, "breadCrumb" => $categoryInstance->title]);
+            while (!empty($categoryInstance->parent_id)) {
+                $categoryInstance = $categoryInstance->parent;
+                array_push($postsSlugs, ["slug" => $categoryInstance->slug, "breadCrumb" => $categoryInstance->title]);
+            }
+        }
+
+        foreach ($postsSlugs as $item) {
+            $item = array_pop($postsSlugs);
+            $slug .= "/" . $item["slug"];
+            $breadCrumb .= "/" . $item["breadCrumb"];
+        }
+        return ["slug" => $slug, "breadCrumb" => $breadCrumb];
+    }
+}
