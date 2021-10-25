@@ -1,7 +1,7 @@
 @extends("blog.layouts.main")
 @push("header.styles")
-    @dd(env("APP_URL").canonical($postInstance))
-    <meta name="canonical" content="{{env("APP_URL")}}"
+    <meta name="canonical" content="{{canonical($postInstance)}}">
+    <meta name="csrf-token" content="{{csrf_token()}}">
 @endpush
 @push("header.scripts")
 @endpush

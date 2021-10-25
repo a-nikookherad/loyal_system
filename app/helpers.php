@@ -47,7 +47,7 @@ if (!function_exists("canonical")) {
         }
         $canonical = array_reverse($canonical);
         $canonical = implode("/", $canonical);
-        return "/" . $canonical;
+        return env("APP_URL") . "/$canonical";
     }
 }
 
