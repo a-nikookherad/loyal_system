@@ -5,16 +5,16 @@ event(new \App\Events\UserRegisterEvent("hi and welcome to my app"));
     dd($exception->getMessage());
 }
 dd("done !");*/
-try {
-//    Auth::loginUsingId(1);
-//    $currentUserInstance = Auth::user();
-//    \Illuminate\Support\Facades\Notification::send($currentUserInstance, new \App\Notifications\TestNotification());
-    Mail::to("newin4mations@gmail.com")->send(new \App\Mail\NewUserRegisterMail());
-//    dd($currentUserInstance->unreadNotifications->toArray());
+/*try {
+    Auth::loginUsingId(1);
+    $currentUserInstance = Auth::user();
+    \Illuminate\Support\Facades\Notification::send($currentUserInstance, new \App\Notifications\TestNotification());
+//    Mail::to("newin4mations@gmail.com")->send(new \App\Mail\NewUserNotification);
+    dd($currentUserInstance->unreadNotifications->toArray());
 } catch (Exception $exception) {
     dd($exception->getMessage());
 }
-dd("done !");
+dd("done !");*/
 /*require '../vendor/autoload.php';
 use \Mailjet\Resources;
 $mj = new \Mailjet\Client('5c04b68c96cfc690e6aa20464160b810','427f879f251879120692090af310cc41',true,['version' => 'v3.1']);
