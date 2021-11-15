@@ -1,4 +1,13 @@
 <?php
+$usersCollection = \App\Models\User::search("0937572")
+    ->get();
+//    ->get();
+dd($usersCollection);
+
+/*$usersCollection = \App\Models\User::query()
+    ->getConnection();
+//    ->get();
+dd($usersCollection);*/
 /*try {
 event(new \App\Events\UserRegisterEvent("hi and welcome to my app"));
 } catch (Exception $exception) {
